@@ -22,6 +22,8 @@ dependencies {
     implementation("io.quarkus:quarkus-hibernate-orm")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
+    // Dependencies
+    implementation("com.google.firebase:firebase-admin:9.4.2")
 }
 
 group = "com.alexastudillo"
