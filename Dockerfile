@@ -1,43 +1,49 @@
 # Stage 1: Native Compilation with GraalVM
 FROM quay.io/quarkus/ubi-quarkus-mandrel-builder-image:jdk-21 AS build
 
-# Set the work directory
+# Set the working directory
 WORKDIR /workspace/app
 
-# Copy files and set permissions
+# Copy files and set permissions for the Gradle wrapper
 COPY . /workspace/app/
 COPY --chmod=755 gradlew /workspace/app/gradlew
+
+# Switch to root user for installing dependencies
 USER root
 
-# Install dependencies required for native build
+# Install dependencies required for native builds
 RUN microdnf install -y gcc glibc-devel zlib-devel \
     && microdnf clean all
 
-# Grant execution permissions to Gradle wrapper
-RUN chmod +x ./gradlew
-
-# Environment variable to fix Gradle file system watching issue
+# Set Gradle environment variables to fix file system watching issues
 ENV GRADLE_OPTS="-Dorg.gradle.vfs.watch=false"
 
-# Clean any previous builds
+# Grant executable permissions to the Gradle wrapper (just in case COPY doesn't work)
+RUN chmod +x ./gradlew
+
+# Clean previous builds and stop Gradle daemons
 RUN ./gradlew --stop
 RUN ./gradlew clean
 
-# Build native executable
-RUN ./gradlew build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true --refresh-dependencies --stacktrace --info --no-daemon
+# Build the native executable with refreshed dependencies
+RUN ./gradlew build \
+    -Dquarkus.native.enabled=true \
+    -Dquarkus.native.container-build=true \
+    --refresh-dependencies \
+    --stacktrace --info --no-daemon
 
-# Stage 2: Image minimum for production
+# Stage 2: Minimal image for production
 FROM quay.io/quarkus/quarkus-micro-image:2.0
 
-# Copy native file
+# Copy the native binary from the build stage
 COPY --from=build /workspace/app/build/native-image/*-runner /app
 
-# Set executable permissions
+# Set executable permissions for the binary
 RUN chmod +x /app
 
-# Expose port
+# Expose the application port
 ENV PORT=10000
 EXPOSE 10000
 
-# Init command
+# Run the application
 CMD ["/app"]
