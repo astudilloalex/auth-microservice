@@ -10,9 +10,8 @@ COPY --chmod=755 gradlew /workspace/app/gradlew
 USER root
 
 # Install dependencies required for native build
-RUN yum install -y gcc glibc-devel zlib-devel \
-    && yum clean all \
-    && rm -rf /var/cache/yum
+RUN microdnf install -y gcc glibc-devel zlib-devel \
+    && microdnf clean all
 
 # Grant execution permissions to Gradle wrapper
 RUN chmod +x ./gradlew
