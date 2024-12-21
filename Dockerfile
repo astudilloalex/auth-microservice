@@ -28,7 +28,7 @@ RUN ./gradlew clean
 # Build the native executable with refreshed dependencies and memory limits
 RUN ./gradlew build \
     -Dquarkus.native.container-build=false \
-    -Dquarkus.native.native-image-xmx=4g \  # Limita a 4 GB de memoria
+    -Dquarkus.native.native-image-xmx=4g \
     --refresh-dependencies \
     --stacktrace --info --no-daemon
 
