@@ -8,6 +8,7 @@ WORKDIR /workspace/app
 COPY . /workspace/app/
 
 # Build native executable
+RUN chmod +x ./gradlew
 RUN ./gradlew build -Dquarkus.package.type=native -Dquarkus.native.container-build=true
 
 # Stage 2: Image minimum for production
