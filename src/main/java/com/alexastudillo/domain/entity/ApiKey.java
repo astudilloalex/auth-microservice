@@ -10,22 +10,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "permissions")
-public class Permission {
-
-     @Id
+@Table(name = "api_keys")
+public class ApiKey {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "code", length = 30, nullable = false)
+    @Column(name = "code", nullable = false, length = 20)
     private String code;
 
-    @Column(name = "name", length = 150, nullable = false)
-    private String name;
+    @Column(name = "company_code", nullable = false, length = 20)
+    private String companyCode;
 
-    @Column(name = "description", length = 255, nullable = false)
-    private String description;
+    @Column(name = "key", nullable = false, length = 255)
+    private String key;
 
     @Column(name = "active", nullable = false)
     private Boolean active;
@@ -33,13 +31,18 @@ public class Permission {
     @Column(name = "creation_date", nullable = false)
     private LocalDateTime creationDate;
 
-    @Column(name = "update_date", nullable = false)
-    private LocalDateTime updateDate;
+    @Column(name = "revoked_at")
+    private LocalDateTime revokedAt;
 
-    public Permission() {
+    @Column(name = "expires_at")
+    private LocalDateTime expiresAt;
+
+    // Default Constructor
+    public ApiKey() {
     }
 
-    // Getters y Setters
+    // Getters and Setters
+
     public Integer getId() {
         return id;
     }
@@ -56,20 +59,20 @@ public class Permission {
         this.code = code;
     }
 
-    public String getName() {
-        return name;
+    public String getCompanyCode() {
+        return companyCode;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
     }
 
-    public String getDescription() {
-        return description;
+    public String getKey() {
+        return key;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public Boolean getActive() {
@@ -88,11 +91,19 @@ public class Permission {
         this.creationDate = creationDate;
     }
 
-    public LocalDateTime getUpdateDate() {
-        return updateDate;
+    public LocalDateTime getRevokedAt() {
+        return revokedAt;
     }
 
-    public void setUpdateDate(LocalDateTime updateDate) {
-        this.updateDate = updateDate;
+    public void setRevokedAt(LocalDateTime revokedAt) {
+        this.revokedAt = revokedAt;
+    }
+
+    public LocalDateTime getExpiresAt() {
+        return expiresAt;
+    }
+
+    public void setExpiresAt(LocalDateTime expiresAt) {
+        this.expiresAt = expiresAt;
     }
 }
