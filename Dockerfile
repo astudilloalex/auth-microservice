@@ -12,7 +12,7 @@ COPY --chmod=755 gradlew /workspace/app/gradlew
 USER root
 
 # Install dependencies required for native builds
-RUN microdnf install -y gcc glibc-devel zlib-devel \
+RUN microdnf install -y gcc glibc-devel zlib-devel libstdc++ libgcc \
     && microdnf clean all
 
 # Set Gradle environment variables to fix file system watching issues
