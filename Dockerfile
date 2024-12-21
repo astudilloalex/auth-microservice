@@ -8,6 +8,7 @@ WORKDIR /workspace/app
 COPY . /workspace/app/
 
 # Build native executable
+COPY --chmod=755 gradlew /workspace/app/gradlew
 RUN chmod +x ./gradlew
 RUN ./gradlew build -Dquarkus.package.type=native -Dquarkus.native.container-build=true
 
