@@ -11,7 +11,7 @@ COPY . /workspace/app/
 RUN ./mvnw package -Pnative -Dquarkus.native.container-build=true
 
 # Stage 2: Image minimum for production
-FROM quay.io/quarkus/ubi-quarkus-micro-image:latest
+FROM quay.io/quarkus/quarkus-micro-image:2.0
 
 # Copy native file
 COPY --from=build /workspace/app/target/*-runner /app
