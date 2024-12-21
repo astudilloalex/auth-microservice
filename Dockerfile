@@ -6,10 +6,9 @@ WORKDIR /workspace/app
 
 # Copy files
 COPY . /workspace/app/
+COPY --chmod=755 gradlew /workspace/app/gradlew
 
 # Build native executable
-COPY --chmod=755 gradlew /workspace/app/gradlew
-RUN chmod +x ./gradlew
 RUN ./gradlew build -Dquarkus.package.type=native -Dquarkus.native.container-build=true
 
 # Stage 2: Image minimum for production
