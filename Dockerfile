@@ -16,8 +16,15 @@ RUN microdnf install -y gcc glibc-devel zlib-devel \
 # Grant execution permissions to Gradle wrapper
 RUN chmod +x ./gradlew
 
+# Environment variable to fix Gradle file system watching issue
+ENV GRADLE_OPTS="-Dorg.gradle.vfs.watch=false"
+
+# Clean any previous builds
+RUN ./gradlew --stop
+RUN ./gradlew clean
+
 # Build native executable
-RUN ./gradlew build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true --stacktrace --info
+RUN ./gradlew build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true --stacktrace --info --no-daemon
 
 # Stage 2: Image minimum for production
 FROM quay.io/quarkus/quarkus-micro-image:2.0
