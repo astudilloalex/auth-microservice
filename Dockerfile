@@ -28,7 +28,7 @@ RUN ./gradlew clean
 # Build the native executable with refreshed dependencies
 RUN ./gradlew build \
     -Dquarkus.native.enabled=true \
-    -Dquarkus.native.container-build=true \
+    -Dquarkus.native.container-build=false \
     --refresh-dependencies \
     --stacktrace --info --no-daemon
 
