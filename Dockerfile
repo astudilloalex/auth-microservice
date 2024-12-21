@@ -24,7 +24,7 @@ RUN ./gradlew --stop
 RUN ./gradlew clean
 
 # Build native executable
-RUN ./gradlew build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true --stacktrace --info --no-daemon
+RUN ./gradlew build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true --refresh-dependencies --stacktrace --info --no-daemon
 
 # Stage 2: Image minimum for production
 FROM quay.io/quarkus/quarkus-micro-image:2.0
