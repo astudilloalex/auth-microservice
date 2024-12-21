@@ -18,17 +18,17 @@ RUN microdnf install -y gcc glibc-devel zlib-devel libstdc++ libgcc \
 # Set Gradle environment variables to fix file system watching issues
 ENV GRADLE_OPTS="-Dorg.gradle.vfs.watch=false"
 
-# Grant executable permissions to the Gradle wrapper (just in case COPY doesn't work)
+# Grant executable permissions to the Gradle wrapper
 RUN chmod +x ./gradlew
 
 # Clean previous builds and stop Gradle daemons
 RUN ./gradlew --stop
 RUN ./gradlew clean
 
-# Build the native executable with refreshed dependencies
+# Build the native executable with refreshed dependencies and memory limits
 RUN ./gradlew build \
-    -Dquarkus.native.enabled=true \
     -Dquarkus.native.container-build=false \
+    -Dquarkus.native.native-image-xmx=4g \  # Limita a 4 GB de memoria
     --refresh-dependencies \
     --stacktrace --info --no-daemon
 
