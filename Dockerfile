@@ -8,7 +8,7 @@ WORKDIR /workspace/app
 COPY . /workspace/app/
 
 # Build native executable
-RUN ./mvnw package -Pnative -Dquarkus.native.container-build=true
+RUN ./gradlew build -Dquarkus.package.type=native -Dquarkus.native.container-build=true
 
 # Stage 2: Image minimum for production
 FROM quay.io/quarkus/quarkus-micro-image:2.0
