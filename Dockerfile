@@ -13,7 +13,6 @@ RUN apt-get update && apt-get install -y libstdc++6 zlib1g-dev && apt-get clean
 
 # Build the JAR file
 RUN ./gradlew build \
-    -Dquarkus.package.type=jar \
     --refresh-dependencies \
     --stacktrace --info --no-daemon
 
