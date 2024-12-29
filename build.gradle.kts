@@ -24,6 +24,8 @@ dependencies {
     testImplementation("io.rest-assured:rest-assured")
     // Dependencies
     implementation("com.google.firebase:firebase-admin:9.4.2")
+    // https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk18on
+    implementation("org.bouncycastle:bcpkix-jdk18on:1.79")
 }
 
 group = "com.alexastudillo"
